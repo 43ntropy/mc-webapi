@@ -1,5 +1,6 @@
 package org.wildtopia.webapi.velocity;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class WebApiVelocity implements ApiProvider {
     }
 
     @Subscribe
-    private void onProxyInitalize(ProxyInitializeEvent e) {
+    private void onProxyInitalize(ProxyInitializeEvent e) throws IOException {
         logger.info("Loading configuration...");
         configuration.load();
         logger.info("Preparing WebAPI...");

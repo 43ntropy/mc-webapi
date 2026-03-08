@@ -1,23 +1,26 @@
 package org.wildtopia.webapi;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+
 import org.wildtopia.webapi.v1.ApiController;
 import org.wildtopia.webapi.v1.ApiProvider;
-import io.javalin.Javalin;
+
+import com.sun.net.httpserver.HttpServer;
 
 public class WebApi {
 
     private final ApiController controller;
-    private final Javalin server;
+    private final HttpServer server;
 
-    public WebApi(ApiProvider provider, String host, int port) {
+    public WebApi(ApiProvider provider, String host, int port) throws IOException {
         this.controller = new ApiController(provider);
-        this.server = Javalin.create(config -> {
-            config.jetty.host = host;
-            config.jetty.port = port;
-            config.startup.showJavalinBanner = false;
-            config.startup.showOldJavalinVersionWarning = true;
-            config.routes.get("/v1/count", controller::getCount);
-        });
+        this.server = HttpServer.create(new InetSocketAddress(host, port), 0);
+        this.initApiV1();
+    }
+
+    private void initApiV1() throws IOException {
+        this.server.createContext("/v1/count", this.controller::getCount);
     }
 
     public void start() {
@@ -25,7 +28,7 @@ public class WebApi {
     }
 
     public void stop() {
-        server.stop();
+        server.stop(0);
     }
 
 }
