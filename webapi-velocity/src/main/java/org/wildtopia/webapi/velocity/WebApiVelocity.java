@@ -20,7 +20,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
     id = "webapi",
     name = "Velocity WebAPI",
     description = "A WebAPI implementation for Velocity",
-    version = "0.1.0",
+    version = "0.1.1",
     authors = {
         "43ntropy"
     }
