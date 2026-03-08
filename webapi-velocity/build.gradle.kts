@@ -18,4 +18,5 @@ dependencies {
 tasks.shadowJar {
     configurations = listOf(project.configurations.runtimeClasspath.get())
     archiveFileName.set("WebApi-Velocity.jar")
+    relocate("com.google.gson", "org.wildtopia.webapi.libs.gson")
 }
